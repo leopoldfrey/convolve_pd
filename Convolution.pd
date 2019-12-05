@@ -1,8 +1,8 @@
-#N canvas 1079 228 243 400 10;
-#N canvas 13 193 1077 463 init 0;
-#X obj 247 259 soundfiler;
-#X obj 247 25 loadbang;
-#X obj 217 29 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#N canvas 857 77 243 400 10;
+#N canvas 151 373 1077 463 init 0;
+#X obj 211 274 soundfiler;
+#X obj 186 7 loadbang;
+#X obj 157 5 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X msg 711 331 print;
 #X msg 702 309 window \$1;
@@ -16,71 +16,100 @@
 #X obj 865 283 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 865 328 s globalMetro;
-#X obj 850 46 table arundelL;
-#X obj 850 67 table arundelR;
 #X obj 702 377 s convolveL;
 #X obj 648 401 s convolveR;
-#X obj 850 117 table tunnelR;
-#X obj 850 96 table tunnelL;
-#X msg 308 148 read -resize ./audio/ir-tunnel_L.wav tunnelL;
-#X msg 348 168 read -resize ./audio/ir-tunnel_R.wav tunnelR;
-#X msg 70 110 \; convolveR analyze tunnelR \; convolveL analyze tunnelL
-;
-#X obj 246 48 t b b b;
-#X msg 35 214 \; convolveR analyze arundelR \; convolveL analyze arundelL
-;
-#X msg 389 109 read -resize ./audio/ir-large-chamber_R.wav chamberR
-;
-#X msg 349 89 read -resize ./audio/ir-large-chamber_L.wav chamberL
-;
-#X obj 852 145 table chamberL;
-#X obj 852 166 table chamberR;
-#X msg 55 162 \; convolveR analyze chamberR \; convolveL analyze chamberL
-;
-#X obj 36 78 sel 0 1 2;
-#X obj 165 67 del 3000;
+#X obj 186 48 t b b b;
+#X obj -4 104 del 3000;
 #X obj 701 263 * 512;
-#X msg 246 208 read -resize ./audio/Arundel_Nave_L2.wav arundelL;
-#X msg 286 228 read -resize ./audio/Arundel_Nave_R2.wav arundelR;
-#X obj 105 85 del 3000;
-#X msg 51 292 \; pd dsp 1;
-#X obj 36 52 r \$0-ir.s;
-#X connect 1 0 23 0;
-#X connect 2 0 23 0;
-#X connect 3 0 16 0;
-#X connect 3 0 17 0;
-#X connect 4 0 16 0;
-#X connect 4 0 17 0;
-#X connect 6 0 32 0;
+#X obj 31 132 r \$0-ir.s;
+#N canvas 266 301 450 300 create_buffers 0;
+#X msg 116 80 buf;
+#X obj 116 160 s buffer-canvas;
+#X obj 116 110 cyclone/sprintf obj 20 20 table %sL;
+#X obj 137 132 cyclone/sprintf obj 20 40 table %sR;
+#X obj 116 185 namecanvas buffer-canvas;
+#X connect 0 0 2 0;
+#X connect 0 0 3 0;
+#X connect 2 0 1 0;
+#X connect 3 0 1 0;
+#X restore 849 -9 pd create_buffers;
+#X obj 910 70 table buf1L;
+#X obj 911 163 table buf3L;
+#X obj 911 184 table buf3R;
+#X obj 910 114 table buf2L;
+#X obj 910 136 table buf2R;
+#X msg 249 148 read -resize ./audio/ir-large-chamber_L.wav buf2L;
+#X msg 248 173 read -resize ./audio/ir-large-chamber_R.wav buf2R;
+#X msg 248 204 read -resize ./audio/ir-tunnel_L.wav buf3L;
+#X msg 248 227 read -resize ./audio/ir-tunnel_R.wav buf3R;
+#X msg 248 97 read -resize ./audio/Arundel_Nave_L.wav buf1L;
+#X msg 249 120 read -resize ./audio/Arundel_Nave_R.wav buf1R;
+#X obj 910 25 table buf0L;
+#X floatatom -4 159 5 0 0 0 - - -;
+#X obj -4 184 t f f;
+#X msg -4 131 0;
+#X obj -71 155 del 3000;
+#X msg -71 180 \; pd dsp 1;
+#X obj 23 209 cyclone/sprintf analyze buf%dL;
+#X obj 23 233 s convolveL;
+#X obj -4 282 s convolveR;
+#X obj 910 91 table buf1R;
+#X obj 513 -4 r \$0-selectfile;
+#X obj 513 24 openpanel;
+#X obj 513 52 splitfilename;
+#X obj 588 82 stripfilename -4;
+#X obj 910 45 table buf0R;
+#X obj 586 159 cyclone/sprintf read -resize ./audio/%s_R.wav buf0R
+;
+#X obj 573 129 cyclone/sprintf read -resize ./audio/%s_L.wav buf0L
+;
+#X obj -4 257 cyclone/sprintf analyze buf%dR;
+#X connect 1 0 16 0;
+#X connect 2 0 16 0;
+#X connect 3 0 14 0;
+#X connect 3 0 15 0;
+#X connect 4 0 14 0;
+#X connect 4 0 15 0;
+#X connect 6 0 18 0;
 #X connect 7 0 6 0;
-#X connect 8 0 16 0;
-#X connect 8 0 17 0;
+#X connect 8 0 14 0;
+#X connect 8 0 15 0;
 #X connect 9 0 13 0;
 #X connect 10 0 11 0;
 #X connect 11 0 12 0;
 #X connect 12 0 9 0;
-#X connect 20 0 0 0;
-#X connect 21 0 0 0;
-#X connect 23 0 31 0;
-#X connect 23 1 33 0;
-#X connect 23 1 34 0;
-#X connect 23 1 20 0;
-#X connect 23 1 21 0;
-#X connect 23 1 26 0;
-#X connect 23 1 25 0;
-#X connect 25 0 0 0;
+#X connect 16 0 17 0;
+#X connect 16 1 30 0;
+#X connect 16 1 31 0;
+#X connect 16 1 28 0;
+#X connect 16 1 29 0;
+#X connect 16 1 26 0;
+#X connect 16 1 27 0;
+#X connect 17 0 35 0;
+#X connect 17 0 36 0;
+#X connect 18 0 4 0;
+#X connect 18 0 5 0;
+#X connect 19 0 33 0;
 #X connect 26 0 0 0;
-#X connect 30 0 24 0;
-#X connect 30 1 29 0;
-#X connect 30 2 22 0;
-#X connect 31 0 24 0;
-#X connect 31 0 35 0;
-#X connect 32 0 4 0;
-#X connect 32 0 5 0;
-#X connect 33 0 0 0;
-#X connect 34 0 0 0;
-#X connect 35 0 36 0;
-#X connect 37 0 30 0;
+#X connect 27 0 0 0;
+#X connect 28 0 0 0;
+#X connect 29 0 0 0;
+#X connect 30 0 0 0;
+#X connect 31 0 0 0;
+#X connect 33 0 34 0;
+#X connect 34 0 49 0;
+#X connect 34 1 38 0;
+#X connect 35 0 33 0;
+#X connect 36 0 37 0;
+#X connect 38 0 39 0;
+#X connect 42 0 43 0;
+#X connect 43 0 44 0;
+#X connect 44 1 45 0;
+#X connect 45 0 47 0;
+#X connect 45 0 48 0;
+#X connect 47 0 0 0;
+#X connect 48 0 0 0;
+#X connect 49 0 40 0;
 #X restore 19 4 pd init;
 #N canvas 0 23 487 359 cpu-meter 0;
 #X floatatom 103 122 5 0 0 1 % - -;
@@ -89,14 +118,15 @@
 #X obj 272 218 * 0.1;
 #X obj 272 187 int;
 #X obj 272 105 r globalMetro;
+#X text 113 103 CPU;
 #X connect 1 0 4 0;
 #X connect 2 0 1 0;
 #X connect 2 1 1 1;
 #X connect 3 0 0 0;
 #X connect 4 0 3 0;
 #X connect 5 0 2 0;
-#X coords 0 -1 1 1 85 40 1 100 100;
-#X restore 144 12 pd cpu-meter;
+#X coords 0 -1 1 1 45 40 2 100 100;
+#X restore 125 6 pd cpu-meter;
 #N canvas 243 393 616 307 input 0;
 #X msg 213 133 stop;
 #X obj 70 40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
@@ -208,7 +238,7 @@
 #X connect 33 0 22 0;
 #X restore 15 76 pd convolution;
 #X obj 20 147 hsl 200 20 0 127 0 1 \$0-drywet.s \$0-drywet.r Dry/Wet
-75 11 0 12 -228856 -1 -1 14500 1;
+75 11 0 12 -228856 -1 -1 19900 1;
 #N canvas 183 441 364 305 dry/wet 0;
 #X obj 11 21 inlet~;
 #X obj 55 21 inlet~;
@@ -260,10 +290,10 @@
 ;
 #X obj 185 282 vu 10 80 outputL empty -1 -8 0 10 -66577 -1 0 0;
 #X obj 207 282 vu 10 80 outputR empty -1 -8 0 10 -66577 -1 0 0;
-#X obj 213 82 vradio 15 1 1 3 \$0-ir.s \$0-ir.r IR 0 -8 0 10 -262144
+#X obj 207 65 vradio 15 1 1 4 \$0-ir.s \$0-ir.r IR 0 -8 0 10 -262144
 -1 -1 0;
-#X text 133 81 arundel nave;
-#X text 169 113 tunnel;
+#X text 126 77 arundel nave;
+#X text 163 109 tunnel;
 #X text 17 371 input;
 #X text 82 371 convolution;
 #X text 179 371 output;
@@ -304,7 +334,7 @@
 #X connect 8 4 10 0;
 #X connect 9 0 13 0;
 #X connect 10 0 9 0;
-#X restore 97 19 pd osc;
+#X restore 72 3 pd osc;
 #N canvas 0 22 577 430 output 0;
 #X obj 83 50 inlet~;
 #X obj 143 53 inlet~;
@@ -316,12 +346,12 @@
 #X connect 1 0 2 1;
 #X restore 19 123 pd output;
 #X obj 20 176 hsl 200 20 0 127 0 1 \$0-hi.s \$0-hi.r Hi_Pass 75 11
-0 12 -228856 -1 -1 7300 1;
+0 12 -228856 -1 -1 0 1;
 #X obj 20 205 hsl 200 20 0 127 0 1 \$0-lo.s \$0-lo.r Low_Pass 75 11
-0 12 -228856 -1 -1 16400 1;
+0 12 -228856 -1 -1 19900 1;
 #X obj 21 232 hsl 200 20 0 1000 0 1 \$0-pre.s \$0-pre.r Pre_Delay_(ms)
-75 11 0 12 -228856 -1 -1 2600 1;
-#X text 127 96 large chamber;
+75 11 0 12 -228856 -1 -1 10000 1;
+#X text 121 93 large chamber;
 #N canvas 391 432 918 390 store 0;
 #X obj 58 -38 r \$0-hi.s;
 #X obj 58 -8 cyclone/prepend store hi;
@@ -383,6 +413,9 @@
 #X connect 24 0 22 0;
 #X restore 85 124 pd store;
 #X floatatom 145 257 5 0 0 0 - pres -;
+#X obj 184 61 bng 15 250 50 0 \$0-selectfile empty empty 17 7 0 10
+-262144 -1 -1;
+#X text 144 59 open>;
 #X connect 2 0 3 0;
 #X connect 2 1 3 1;
 #X connect 3 0 5 0;
@@ -391,5 +424,6 @@
 #X connect 3 3 5 3;
 #X connect 5 0 21 0;
 #X connect 5 1 21 1;
+#X connect 18 0 2 1;
 #X connect 19 0 2 0;
 #X coords 0 0 1 1 85 60 0;
