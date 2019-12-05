@@ -1,4 +1,4 @@
-#N canvas 548 368 243 400 10;
+#N canvas 1079 228 243 400 10;
 #N canvas 13 193 1077 463 init 0;
 #X obj 247 259 soundfiler;
 #X obj 247 25 loadbang;
@@ -26,7 +26,6 @@
 #X msg 348 168 read -resize ./audio/ir-tunnel_R.wav tunnelR;
 #X msg 70 110 \; convolveR analyze tunnelR \; convolveL analyze tunnelL
 ;
-#X msg 357 40 \; drywet-set 0;
 #X obj 246 48 t b b b;
 #X msg 35 214 \; convolveR analyze arundelR \; convolveL analyze arundelL
 ;
@@ -46,13 +45,13 @@
 #X obj 105 85 del 3000;
 #X msg 51 292 \; pd dsp 1;
 #X obj 36 52 r \$0-ir.s;
-#X connect 1 0 24 0;
-#X connect 2 0 24 0;
+#X connect 1 0 23 0;
+#X connect 2 0 23 0;
 #X connect 3 0 16 0;
 #X connect 3 0 17 0;
 #X connect 4 0 16 0;
 #X connect 4 0 17 0;
-#X connect 6 0 33 0;
+#X connect 6 0 32 0;
 #X connect 7 0 6 0;
 #X connect 8 0 16 0;
 #X connect 8 0 17 0;
@@ -62,27 +61,26 @@
 #X connect 12 0 9 0;
 #X connect 20 0 0 0;
 #X connect 21 0 0 0;
-#X connect 24 0 32 0;
-#X connect 24 1 34 0;
-#X connect 24 1 35 0;
-#X connect 24 1 20 0;
-#X connect 24 1 21 0;
-#X connect 24 1 27 0;
-#X connect 24 1 26 0;
-#X connect 24 2 23 0;
+#X connect 23 0 31 0;
+#X connect 23 1 33 0;
+#X connect 23 1 34 0;
+#X connect 23 1 20 0;
+#X connect 23 1 21 0;
+#X connect 23 1 26 0;
+#X connect 23 1 25 0;
+#X connect 25 0 0 0;
 #X connect 26 0 0 0;
-#X connect 27 0 0 0;
-#X connect 31 0 25 0;
-#X connect 31 1 30 0;
-#X connect 31 2 22 0;
-#X connect 32 0 25 0;
-#X connect 32 0 36 0;
-#X connect 33 0 4 0;
-#X connect 33 0 5 0;
+#X connect 30 0 24 0;
+#X connect 30 1 29 0;
+#X connect 30 2 22 0;
+#X connect 31 0 24 0;
+#X connect 31 0 35 0;
+#X connect 32 0 4 0;
+#X connect 32 0 5 0;
+#X connect 33 0 0 0;
 #X connect 34 0 0 0;
-#X connect 35 0 0 0;
-#X connect 36 0 37 0;
-#X connect 38 0 31 0;
+#X connect 35 0 36 0;
+#X connect 37 0 30 0;
 #X restore 19 4 pd init;
 #N canvas 0 23 487 359 cpu-meter 0;
 #X floatatom 103 122 5 0 0 1 % - -;
@@ -210,7 +208,7 @@
 #X connect 33 0 22 0;
 #X restore 15 76 pd convolution;
 #X obj 20 147 hsl 200 20 0 127 0 1 \$0-drywet.s \$0-drywet.r Dry/Wet
-75 11 0 12 -228856 -1 -1 11125 1;
+75 11 0 12 -228856 -1 -1 14500 1;
 #N canvas 183 441 364 305 dry/wet 0;
 #X obj 11 21 inlet~;
 #X obj 55 21 inlet~;
@@ -263,9 +261,8 @@
 #X obj 185 282 vu 10 80 outputL empty -1 -8 0 10 -66577 -1 0 0;
 #X obj 207 282 vu 10 80 outputR empty -1 -8 0 10 -66577 -1 0 0;
 #X obj 213 82 vradio 15 1 1 3 \$0-ir.s \$0-ir.r IR 0 -8 0 10 -262144
--1 -1 1;
+-1 -1 0;
 #X text 133 81 arundel nave;
-#X text 127 97 large chamber;
 #X text 169 113 tunnel;
 #X text 17 371 input;
 #X text 82 371 convolution;
@@ -319,64 +316,80 @@
 #X connect 1 0 2 1;
 #X restore 19 123 pd output;
 #X obj 20 176 hsl 200 20 0 127 0 1 \$0-hi.s \$0-hi.r Hi_Pass 75 11
-0 12 -228856 -1 -1 6268 1;
+0 12 -228856 -1 -1 7300 1;
 #X obj 20 205 hsl 200 20 0 127 0 1 \$0-lo.s \$0-lo.r Low_Pass 75 11
-0 12 -228856 -1 -1 15983 1;
+0 12 -228856 -1 -1 16400 1;
 #X obj 21 232 hsl 200 20 0 1000 0 1 \$0-pre.s \$0-pre.r Pre_Delay_(ms)
-75 11 0 12 -228856 -1 -1 3291 1;
+75 11 0 12 -228856 -1 -1 2600 1;
+#X text 127 96 large chamber;
+#N canvas 391 432 918 390 store 0;
+#X obj 58 -38 r \$0-hi.s;
+#X obj 58 -8 cyclone/prepend store hi;
+#X obj 214 -8 cyclone/prepend store lo;
+#X obj 214 -38 r \$0-lo.s;
+#X obj 374 -40 r \$0-drywet.s;
+#X obj 374 -10 cyclone/prepend store drywet;
+#X obj 201 197 pack f s;
+#X msg 200 227 \$2 \$1;
+#X obj 553 -10 cyclone/prepend store pre;
+#X obj 553 -40 r \$0-pre.s;
+#X obj 712 -39 r \$0-ir.s;
+#X obj 712 -9 cyclone/prepend store ir;
+#X obj 315 313 s \$0-drywet.r;
+#X obj 244 312 s \$0-lo.r;
+#X obj 175 312 s \$0-hi.r;
+#X msg 644 141 read convolution-preset.txt;
+#X obj 201 262 route hi lo drywet pre ir;
+#X obj 403 313 s \$0-pre.r;
+#X obj 475 315 s \$0-ir.r;
+#X obj 564 79 loadbang;
+#X msg 564 136 dump;
+#X obj 564 109 del 200;
+#X obj 201 168 cyclone/coll convolution-preset.txt;
+#C restore;
+#X obj 21 48 t b b;
+#X msg 21 131 writeagain;
+#X connect 0 0 1 0;
+#X connect 1 0 22 0;
+#X connect 1 0 23 0;
+#X connect 2 0 22 0;
+#X connect 2 0 23 0;
+#X connect 3 0 2 0;
+#X connect 4 0 5 0;
+#X connect 5 0 22 0;
+#X connect 5 0 23 0;
+#X connect 6 0 7 0;
+#X connect 7 0 16 0;
+#X connect 8 0 22 0;
+#X connect 8 0 23 0;
+#X connect 9 0 8 0;
+#X connect 10 0 11 0;
+#X connect 11 0 22 0;
+#X connect 11 0 23 0;
+#X connect 15 0 22 0;
+#X connect 16 0 14 0;
+#X connect 16 1 13 0;
+#X connect 16 2 12 0;
+#X connect 16 3 17 0;
+#X connect 16 4 18 0;
+#X connect 19 0 21 0;
+#X connect 19 0 15 0;
+#X connect 20 0 22 0;
+#X connect 21 0 20 0;
+#X connect 22 0 6 0;
+#X connect 22 1 6 1;
+#X connect 23 0 24 0;
+#X connect 23 1 24 0;
+#X connect 24 0 22 0;
+#X restore 85 124 pd store;
 #X floatatom 145 257 5 0 0 0 - pres -;
-#N canvas 85 265 826 406 store.state 0;
-#X text 253 141 SEND: \$0-<parameter_name>.s;
-#X text 253 161 RECEIVE: \$0-<parameter_name>.r;
-#N canvas 81 75 329 237 read.write 0;
-#X obj 74 111 savestate;
-#X obj 74 91 r \$0-to.savestate;
-#X obj 125 131 s \$0-savestate.right;
-#X text 78 33 send and receive lists from the individual abstractions
-, f 27;
-#X obj 74 171 s \$0-savestate.left;
-#X obj 74 131 t a b;
-#X obj 101 151 s \$0-stop.loadbang;
-#X connect 0 0 5 0;
-#X connect 0 1 2 0;
-#X connect 1 0 0 0;
-#X connect 5 0 4 0;
-#X connect 5 1 6 0;
-#X restore 50 32 pd read.write;
-#X text 253 341 With this method it's still required to create a new
-[store.param] (or [store.array] or [store.text]) abstraction for every
-parameter or table to be saved \, but at least there is no need to
-patch all the send and receives individually., f 84;
-#X text 253 221 Arrays can be saved as well with the [store.array]
-object. The first argument is \$0 \, the second is the name of the
-array without \$0-. The object on the left will save the content of
-a table named "\$0-array1"., f 84;
-#X text 253 31 This is the read/write subpatch which should be left
-as-is., f 84;
-#X text 253 81 In order for a parameter that is in the abstraction
-to be saved in the parent patch \, here there needs to be a [store.param]
-abstraction with the name of that parameter as the second argument
-(whilst the first argument is always \$0). The send and receive symbols
-for each parameter must be formated in this way:, f 84;
-#X text 253 291 Text objects can be saved in a similar way to arrays
-with this object [store.text]., f 84;
-#X obj 50 82 store.param \$0 hi;
-#X obj 50 102 store.param \$0 lo;
-#X obj 50 122 store.param \$0 drywet;
-#X obj 50 142 store.param \$0 pre;
-#X obj 50 162 store.param \$0 ir;
-#N canvas 0 50 450 300 store.array 0;
-#X restore 50 222 pd store.array \$0 array1;
-#N canvas 0 50 450 300 store.text 0;
-#X restore 50 292 pd store.text \$0 text1;
-#X restore 110 59 pd store.state;
 #X connect 2 0 3 0;
 #X connect 2 1 3 1;
 #X connect 3 0 5 0;
 #X connect 3 1 5 1;
 #X connect 3 2 5 2;
 #X connect 3 3 5 3;
-#X connect 5 0 22 0;
-#X connect 5 1 22 1;
-#X connect 20 0 2 0;
+#X connect 5 0 21 0;
+#X connect 5 1 21 1;
+#X connect 19 0 2 0;
 #X coords 0 0 1 1 85 60 0;
