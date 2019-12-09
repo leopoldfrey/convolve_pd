@@ -1,5 +1,5 @@
-drywet, 100.965;
-hi, 63.1831;
-lo, 98.1197;
-pre, 0.958339;
-ir-name, _0;
+drywet, 116.789;
+hi, 83.603;
+lo, 97.6432;
+pre, 0;
+ir-name, ir-cym;
