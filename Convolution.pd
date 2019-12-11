@@ -1,4 +1,4 @@
-#N canvas 533 244 238 430 10;
+#N canvas 267 231 226 430 10;
 #N canvas 120 320 831 413 init 0;
 #X obj 299 336 soundfiler;
 #X obj 108 74 loadbang;
@@ -210,7 +210,7 @@
 #X connect 33 0 12 0;
 #X restore 9 85 pd convolution;
 #X obj 12 184 hsl 200 20 0 127 0 1 \$0-drywet.s \$0-drywet.r Dry/Wet
-75 11 0 12 -228856 -1 -1 18300 1;
+75 11 0 12 -228856 -1 -1 9088 1;
 #N canvas 183 441 364 305 dry/wet 0;
 #X obj 11 21 inlet~;
 #X obj 55 21 inlet~;
@@ -314,11 +314,11 @@
 #X connect 1 0 2 1;
 #X restore 9 132 pd output;
 #X obj 12 213 hsl 200 20 0 127 0 1 \$0-hi.s \$0-hi.r Hi_Pass 75 11
-0 12 -228856 -1 -1 13100 1;
+0 12 -228856 -1 -1 4544 1;
 #X obj 12 242 hsl 200 20 0 127 0 1 \$0-lo.s \$0-lo.r Low_Pass 75 11
-0 12 -228856 -1 -1 15300 1;
+0 12 -228856 -1 -1 6581 1;
 #X obj 12 269 hsl 160 20 0 1000 0 1 \$0-pre.s \$0-pre.r Pre_Delay_(s)
-75 11 0 12 -228856 -1 -1 0 1;
+75 11 0 12 -228856 -1 -1 2254 1;
 #N canvas 85 251 918 446 store 0;
 #X obj 58 -38 r \$0-hi.s;
 #X obj 58 -8 cyclone/prepend store hi;
@@ -417,6 +417,32 @@
 #X obj 9 160 bng 15 250 50 0 \$0-selectfile empty empty 17 7 0 10 -262144
 -1 -1;
 #X symbolatom 32 158 30 0 0 0 - #0-ir-name.r #0-ir-name.s;
+#N canvas 40 152 450 300 midi 0;
+#X obj 129 60 ctlin;
+#X obj 129 96 pack;
+#X msg 128 127 \$2 \$1;
+#X obj 287 150 prepend set;
+#X msg 288 178 0 58;
+#X floatatom 277 248 5 0 0 0 - - -;
+#X obj 277 223 / 0.127;
+#X obj 211 242 s \$0-lo.r;
+#X obj 278 274 s \$0-pre.r;
+#X obj 147 242 s \$0-hi.r;
+#X obj 61 242 s \$0-drywet.r;
+#X obj 119 171 route 0 1 2 3;
+#X connect 0 0 1 0;
+#X connect 0 1 1 1;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 2 0 11 0;
+#X connect 3 0 4 0;
+#X connect 5 0 8 0;
+#X connect 6 0 5 0;
+#X connect 11 0 10 0;
+#X connect 11 1 9 0;
+#X connect 11 2 7 0;
+#X connect 11 3 6 0;
+#X restore 107 57 pd midi;
 #X connect 2 0 3 0;
 #X connect 2 1 3 1;
 #X connect 3 0 5 0;
