@@ -2,4 +2,4 @@ drywet, 116.789;
 hi, 83.603;
 lo, 97.6432;
 pre, 0;
-ir-name, ir-cym;
+ir-name, default;

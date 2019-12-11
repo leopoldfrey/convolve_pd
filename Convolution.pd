@@ -1,4 +1,4 @@
-#N canvas 533 214 230 421 10;
+#N canvas 533 244 238 430 10;
 #N canvas 120 320 831 413 init 0;
 #X obj 299 336 soundfiler;
 #X obj 108 74 loadbang;
@@ -210,7 +210,7 @@
 #X connect 33 0 12 0;
 #X restore 9 85 pd convolution;
 #X obj 12 184 hsl 200 20 0 127 0 1 \$0-drywet.s \$0-drywet.r Dry/Wet
-75 11 0 12 -228856 -1 -1 18333 1;
+75 11 0 12 -228856 -1 -1 18300 1;
 #N canvas 183 441 364 305 dry/wet 0;
 #X obj 11 21 inlet~;
 #X obj 55 21 inlet~;
@@ -314,7 +314,7 @@
 #X connect 1 0 2 1;
 #X restore 9 132 pd output;
 #X obj 12 213 hsl 200 20 0 127 0 1 \$0-hi.s \$0-hi.r Hi_Pass 75 11
-0 12 -228856 -1 -1 13162 1;
+0 12 -228856 -1 -1 13100 1;
 #X obj 12 242 hsl 200 20 0 127 0 1 \$0-lo.s \$0-lo.r Low_Pass 75 11
 0 12 -228856 -1 -1 15300 1;
 #X obj 12 269 hsl 160 20 0 1000 0 1 \$0-pre.s \$0-pre.r Pre_Delay_(s)
@@ -358,9 +358,10 @@
 -1 -1;
 #X obj 100 242 print recall;
 #X obj 164 167 cyclone/prepend symbol;
-#X msg 564 136 dump;
+#X msg 521 138 dump;
 #X obj 471 210 t b a;
 #X obj 616 49 r \$0-init-preset;
+#X msg 674 200 symbol default;
 #X connect 0 0 1 0;
 #X connect 1 0 16 0;
 #X connect 1 0 17 0;
@@ -378,6 +379,7 @@
 #X connect 9 0 8 0;
 #X connect 13 0 16 0;
 #X connect 15 0 36 0;
+#X connect 15 0 39 0;
 #X connect 16 0 25 0;
 #X connect 16 1 26 1;
 #X connect 16 1 6 1;
@@ -397,7 +399,6 @@
 #X connect 23 2 30 0;
 #X connect 23 3 14 0;
 #X connect 23 3 31 0;
-#X connect 23 4 37 0;
 #X connect 25 0 35 0;
 #X connect 25 1 6 0;
 #X connect 26 0 7 0;
@@ -410,6 +411,7 @@
 #X connect 37 1 29 0;
 #X connect 38 0 15 0;
 #X connect 38 0 13 0;
+#X connect 39 0 24 0;
 #X restore 103 12 pd store;
 #X floatatom 182 270 5 0 0 0 - pres -;
 #X obj 9 160 bng 15 250 50 0 \$0-selectfile empty empty 17 7 0 10 -262144
