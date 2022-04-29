@@ -1,5 +1,6 @@
-drywet, 90;
-hi, 79;
+hi, 0;
 lo, 127;
-pre, 188.976;
+pre, 0;
 ir-name, default;
+dry, 0;
+wet, 127;
